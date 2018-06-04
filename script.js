@@ -11,18 +11,12 @@ fetch('the_object.json')
         .then(function(myJson) {
         data = myJson;
         renderPage(data)
-        });
-    
-
-
-// Create a function to render the page elements:
+		});
+// Keep a global value of the input filter result to use in the sorting functions
 let textFilter;
-
+// Create a function to render the page elements:
 function renderPage(data){
-
-
 // Prepare the app's UI elements:
-
 // Create elements and assign them to variables:
             const app = document.getElementById('container');
             const header = document.createElement('div');
@@ -59,9 +53,7 @@ function renderPage(data){
             sortBox.appendChild(sortByPrice);
             sortBox.appendChild(sortByRank);
             app.appendChild(gallery);	
-			
 // Display the coin cards in the gallery:
-
 // Use the data result to build the coin card:
 		data.forEach(function (element) {
 // Prepare the coin cards elements:
@@ -108,8 +100,6 @@ function renderPage(data){
 //	End of foreach iteration:
 			})
 
-
-
 // Filter the data:
 // Add an event listener to the filter input to get its value:  
 			myInput.addEventListener('input', function (event){	
@@ -135,7 +125,6 @@ function renderPage(data){
 			let percentChange24h = document.createElement('div');
 			let percentChange7d = document.createElement('div');
 			coinCard = document.createElement('div');
-
 // Give Css attributes to the coin card elements:
 			name.setAttribute('class', 'name');
 			rank.setAttribute('class', 'rank');
@@ -146,7 +135,6 @@ function renderPage(data){
 			percentChange24h.setAttribute('class', 'percent-change-24h');
 			percentChange7d.setAttribute('class', 'percent-change-7d');
 			coinCard.setAttribute('class', 'my-coin-card');
-	
 // Append the elements to the coin card Dom element:
 			coinCard.appendChild(availableSupply);	
 			coinCard.appendChild(name);
@@ -156,7 +144,6 @@ function renderPage(data){
 			coinCard.appendChild(percentChange1h);
 			coinCard.appendChild(percentChange24h);
 			coinCard.appendChild(percentChange7d);
-	
 // Give values to elements:
 			name.innerHTML = element.name;
 			rank.innerHTML = '<strong>Rank: </strong>' + element.rank;
@@ -166,7 +153,6 @@ function renderPage(data){
 			percentChange1h.innerHTML = '<strong>Percent Change 1h: </strong>' + element.percent_change_1h;
 			percentChange24h.innerHTML = '<strong>Percent Change 24h: </strong>' + element.percent_change_24h;
 			percentChange7d.innerHTML = '<strong>Percent Change 7d: </strong>' + element.percent_change_7d;
-
 //	Add the coin card to the gallery:
 			gallery.appendChild(coinCard);
 	//	End of foreach iteration:
@@ -174,12 +160,15 @@ function renderPage(data){
 // End of event listener:
 		 });
 		 
-		
 
 // Sort the filtered result:
 sortByName.addEventListener('click', function (event){
-	let inputValue = event.target.value.toLowerCase();
-	if (inputValue === ''){
+	let inputValue = document.getElementById('my-input').value.toLowerCase();
+	if (inputValue){
+		console.log('textFilter1:' + textFilter);
+		textFilter = textFilter;
+	} else {
+		console.log('textFilter2:' + textFilter);
 		textFilter = data;
 	}
 	let sortName = textFilter.sort(function(a, b) {
@@ -203,7 +192,6 @@ sortByName.addEventListener('click', function (event){
 							let percentChange24h = document.createElement('div');
 							let percentChange7d = document.createElement('div');
 							coinCard = document.createElement('div');
-				
 				// Give Css attributes to the coin card elements:
 							name.setAttribute('class', 'name');
 							rank.setAttribute('class', 'rank');
@@ -214,7 +202,6 @@ sortByName.addEventListener('click', function (event){
 							percentChange24h.setAttribute('class', 'percent-change-24h');
 							percentChange7d.setAttribute('class', 'percent-change-7d');
 							coinCard.setAttribute('class', 'my-coin-card');
-					
 				// Append the elements to the coin card Dom element:
 							coinCard.appendChild(availableSupply);	
 							coinCard.appendChild(name);
@@ -224,7 +211,6 @@ sortByName.addEventListener('click', function (event){
 							coinCard.appendChild(percentChange1h);
 							coinCard.appendChild(percentChange24h);
 							coinCard.appendChild(percentChange7d);
-					
 				// Give values to elements:
 							name.innerHTML = element.name;
 							rank.innerHTML = '<strong>Rank: </strong>' + element.rank;
@@ -234,18 +220,20 @@ sortByName.addEventListener('click', function (event){
 							percentChange1h.innerHTML = '<strong>Percent Change 1h: </strong>' + element.percent_change_1h;
 							percentChange24h.innerHTML = '<strong>Percent Change 24h: </strong>' + element.percent_change_24h;
 							percentChange7d.innerHTML = '<strong>Percent Change 7d: </strong>' + element.percent_change_7d;
-				
 				//	Add the coin card to the gallery:
 							gallery.appendChild(coinCard);
 					//	End of foreach iteration:
 
 			});
+		
 
 });
 
 sortByPrice.addEventListener('click', function (event){
-	let inputValue = event.target.value.toLowerCase();
-	if (inputValue === ''){
+	let inputValue = document.getElementById('my-input').value.toLowerCase();
+	if (inputValue){
+		textFilter = textFilter;
+	} else {
 		textFilter = data;
 	}
 	let sortPrice = textFilter.sort(function(a, b) {
@@ -267,7 +255,6 @@ sortByPrice.addEventListener('click', function (event){
 						let percentChange24h = document.createElement('div');
 						let percentChange7d = document.createElement('div');
 						coinCard = document.createElement('div');
-			
 			// Give Css attributes to the coin card elements:
 						name.setAttribute('class', 'name');
 						rank.setAttribute('class', 'rank');
@@ -278,7 +265,6 @@ sortByPrice.addEventListener('click', function (event){
 						percentChange24h.setAttribute('class', 'percent-change-24h');
 						percentChange7d.setAttribute('class', 'percent-change-7d');
 						coinCard.setAttribute('class', 'my-coin-card');
-				
 			// Append the elements to the coin card Dom element:
 						coinCard.appendChild(availableSupply);	
 						coinCard.appendChild(name);
@@ -288,7 +274,6 @@ sortByPrice.addEventListener('click', function (event){
 						coinCard.appendChild(percentChange1h);
 						coinCard.appendChild(percentChange24h);
 						coinCard.appendChild(percentChange7d);
-				
 			// Give values to elements:
 						name.innerHTML = element.name;
 						rank.innerHTML = '<strong>Rank: </strong>' + element.rank;
@@ -298,7 +283,6 @@ sortByPrice.addEventListener('click', function (event){
 						percentChange1h.innerHTML = '<strong>Percent Change 1h: </strong>' + element.percent_change_1h;
 						percentChange24h.innerHTML = '<strong>Percent Change 24h: </strong>' + element.percent_change_24h;
 						percentChange7d.innerHTML = '<strong>Percent Change 7d: </strong>' + element.percent_change_7d;
-			
 			//	Add the coin card to the gallery:
 						gallery.appendChild(coinCard);
 				//	End of foreach iteration:
@@ -307,8 +291,12 @@ sortByPrice.addEventListener('click', function (event){
 });
 
 sortByRank.addEventListener('click', function (event){
-	let inputValue = event.target.value.toLowerCase();
-	if (inputValue === ''){
+	let inputValue = document.getElementById('my-input').value.toLowerCase();
+	if (inputValue){
+		console.log('textFilter1:' + textFilter);
+		textFilter = textFilter;
+	} else {
+		console.log('textFilter2:' + textFilter);
 		textFilter = data;
 	}
 	let sortRank = textFilter.sort(function(a, b) {
@@ -330,7 +318,6 @@ sortByRank.addEventListener('click', function (event){
 						let percentChange24h = document.createElement('div');
 						let percentChange7d = document.createElement('div');
 						coinCard = document.createElement('div');
-			
 			// Give Css attributes to the coin card elements:
 						name.setAttribute('class', 'name');
 						rank.setAttribute('class', 'rank');
@@ -341,7 +328,6 @@ sortByRank.addEventListener('click', function (event){
 						percentChange24h.setAttribute('class', 'percent-change-24h');
 						percentChange7d.setAttribute('class', 'percent-change-7d');
 						coinCard.setAttribute('class', 'my-coin-card');
-				
 			// Append the elements to the coin card Dom element:
 						coinCard.appendChild(availableSupply);	
 						coinCard.appendChild(name);
@@ -351,7 +337,6 @@ sortByRank.addEventListener('click', function (event){
 						coinCard.appendChild(percentChange1h);
 						coinCard.appendChild(percentChange24h);
 						coinCard.appendChild(percentChange7d);
-				
 			// Give values to elements:
 						name.innerHTML = element.name;
 						rank.innerHTML = '<strong>Rank: </strong>' + element.rank;
@@ -361,7 +346,6 @@ sortByRank.addEventListener('click', function (event){
 						percentChange1h.innerHTML = '<strong>Percent Change 1h: </strong>' + element.percent_change_1h;
 						percentChange24h.innerHTML = '<strong>Percent Change 24h: </strong>' + element.percent_change_24h;
 						percentChange7d.innerHTML = '<strong>Percent Change 7d: </strong>' + element.percent_change_7d;
-			
 			//	Add the coin card to the gallery:
 						gallery.appendChild(coinCard);
 				//	End of foreach iteration:
