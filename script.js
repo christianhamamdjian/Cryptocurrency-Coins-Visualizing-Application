@@ -1,16 +1,17 @@
-fetch('the_object.json')
+fetch('https://api.coinmarketcap.com/v1/ticker/?limit=2000')
     .then(function(response) {
     return response.json();
     })
         .then(function(myJson) {
+        // console.log(myJson);
         data = myJson;
 		renderPage(data)
 		})
 		.catch(error => console.error(error));
 
-
 // Create a function to render the page elements:
 function renderPage(data){
+	let dataSource = data;
 // Prepare the app's UI elements:
 // Create elements and assign them to variables:
             const app = document.getElementById('container');
@@ -22,7 +23,7 @@ function renderPage(data){
             const sortByName = document.createElement('button');
             const sortByPrice = document.createElement('button');
             const sortByRank = document.createElement('button');
-						let coinCard;
+			let coinCard;
 // Give Css attributes to the elements:
             header.setAttribute('id', 'my-header');
             filter.setAttribute('id', 'my-filter');
@@ -35,7 +36,7 @@ function renderPage(data){
             sortByRank.setAttribute('id', 'sort-by-rank');
 // Give values to elements:
             header.innerHTML = '<h1>Cryptocurrency Coins Visualizing</h1>'; 
-		  		  myInput.setAttribute('placeholder', 'Search for your coins');	
+		  	myInput.setAttribute('placeholder', 'Search for your coins');	
             sortByName.innerText = 'Sort By Name' ;
             sortByPrice.innerText = 'Sort By Price';
             sortByRank.innerText = 'Sort By Rank';
@@ -52,8 +53,8 @@ function renderPage(data){
 
 // Display the coin cards in the gallery:
 // Use the data result to build the coin card:
-function galleryBuilder(dataSource){
-dataSource.forEach(function (element) {
+function galleryBuilder(myData){
+	myData.forEach(function (element) {
 // Prepare the coin cards elements:
 // Create the coin card elements and assign them to variables:
 			let name = document.createElement('div');
@@ -107,8 +108,7 @@ function emptyGallery(){
 }
 
 //	Add all the coin cards to the gallery:
-galleryBuilder(data);
-
+	galleryBuilder(data);
 
 
 // Filter the data:
@@ -120,6 +120,18 @@ galleryBuilder(data);
 	textFilter = data.filter(function (element){
 		return element.name.includes(inputValue);
 	});
+
+
+	console.log(textFilter);
+
+
+	dataSource = textFilter;
+
+
+	console.log(dataSource);
+
+
+
 // Empty the gallery
 	emptyGallery();
 //	Add the coin cards to the gallery:
@@ -132,13 +144,13 @@ galleryBuilder(data);
 // Sort the filtered result:
 // Sort by name:
 sortByName.addEventListener('click', function (event){
-	let inputValue = document.getElementById('my-input').value.toLowerCase();
-	if (inputValue){
-		textFilter = textFilter;
-	} else {
-		textFilter = data;
-	}
-	let sortName = textFilter.sort(function(a, b) {
+	// let inputValue = document.getElementById('my-input').value.toLowerCase();
+	// if (inputValue){
+	// 	textFilter = textFilter;
+	// } else {
+	// 	textFilter = data;
+	// }
+	let sortName = dataSource.sort(function(a, b) {
 		if(a.name < b.name) return -1;
 		if(a.name > b.name) return 1;
 		return 0;
@@ -150,13 +162,13 @@ sortByName.addEventListener('click', function (event){
 });
 // Sort by price:
 sortByPrice.addEventListener('click', function (event){
-	let inputValue = document.getElementById('my-input').value.toLowerCase();
-	if (inputValue){
-		textFilter = textFilter;
-	} else {
-		textFilter = data;
-	}
-	let sortPrice = textFilter.sort(function(a, b) {
+	// let inputValue = document.getElementById('my-input').value.toLowerCase();
+	// if (inputValue){
+	// 	textFilter = textFilter;
+	// } else {
+	// 	textFilter = data;
+	// }
+	let sortPrice = dataSource.sort(function(a, b) {
 		return a.price_btc - b.price_btc;
 	});
 // Empty the gallery
@@ -166,13 +178,13 @@ sortByPrice.addEventListener('click', function (event){
 });
 // Sort by rank:
 sortByRank.addEventListener('click', function (event){
-	let inputValue = document.getElementById('my-input').value.toLowerCase();
-	if (inputValue){
-		textFilter = textFilter;
-	} else {
-		textFilter = data;
-	}
-	let sortRank = textFilter.sort(function(a, b) {
+	// let inputValue = document.getElementById('my-input').value.toLowerCase();
+	// if (inputValue){
+	// 	textFilter = textFilter;
+	// } else {
+	// 	textFilter = data;
+	// }
+	let sortRank = dataSource.sort(function(a, b) {
 		return a.rank - b.rank;
 	});
 // Empty the gallery
